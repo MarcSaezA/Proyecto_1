@@ -63,8 +63,7 @@
 
 //         res.send(respuesta);
 //     })
-let jugadores=[
-        jugador = {
+let jugadores=[{
             posicion: '1',
             alias:'jjpez',
             nombre:'Josephe',
@@ -72,7 +71,7 @@ let jugadores=[
             score:'950'
         }
         ,
-        jugador = {
+        {
             posicion: '2',
             alias:'sanzioj',
             nombre:'Juanjo',
@@ -80,7 +79,7 @@ let jugadores=[
             score:'850'
         }
         ,
-        jugador = {
+        {
             posicion: '3',
             alias:'uwumaker',
             nombre:'Martin',
@@ -89,16 +88,78 @@ let jugadores=[
         }
     ];   
 let respuesta= {
-    error:'',
+    error:true,
     codigo:'',
-    mensaje:''
+    mensaje:'',
+    totalplayers:''
 };
 app.get('/ranking',function(req,res)
 {
     res.send(jugadores);
 });
 
-app.get('/jugador')
+app.get('/jugadores/:alias',function(req,res)
+{
+
+    for(i = 0; i < jugadores.length; i++)
+    {
+
+        if (jugadores[i].alias==req.params.alias)
+        {
+            respuesta= {
+                error:false,
+                codigo:'',
+                mensaje:'El jugador existe',
+                respuesta:jugadores[i]
+            }
+        }
+        
+        
+    }
+    if(respuesta.error == true)
+        {
+            respuesta= {
+                error:true,
+                codigo:540,
+                mensaje:'El jugador no existe',
+                totalplayers:3
+            }
+            
+            
+        }
+    res.send(respuesta);
+    respuesta.error=true;
+});
+app.post(function (req, res) {
+             if (!req.body.nombre || !req.body.apellido || !req.body.score ||!req.body.alias) {
+                respuesta = {
+                     error: true,
+                     codigo: 502,
+                     mensaje: 'El campo alias, nombre, apellido y score necesarios'
+                 };
+             } else {
+                 if (jugadores.nombre == req.body.nombre && jugadores.apellido == req.body.apellido && jugadores.alias==req.body.alias) {
+                     respuesta = {
+                         error: true,
+                         codigo: 503,
+                        mensaje: 'El jugador ya fue creado previamente'
+                     };
+                 } else {
+                     jugadores = {
+                         apellido: req.body.apellido,
+                         score: req.body.score,
+                         nombre: req.body.nombre
+                        
+                     };
+                     respuesta = {
+                         error: false,
+                         mensaje: 'Jugador creado',
+                         codigo: 200,        
+                         respuesta: jugadores
+                     };
+                 }
+             }
+
 
 
  app.listen(3000, () => {
