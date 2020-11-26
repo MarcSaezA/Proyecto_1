@@ -1,0 +1,186 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a simple API",
+    "version": "1.0.0",
+    "title": "Simple Inventory API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/MarcSaez/swagger/1.0.0",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "nada"
+        ],
+        "summary": "envia cosas",
+        "description": "Algo\n",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "has recibido"
+          }
+        }
+      }
+    },
+    "/ranking": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "summary": "Recibes Ranking",
+        "description": "El Ranking\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "obtencion del rankin",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/players"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{alias}": {
+      "get": {
+        "tags": [
+          "Enseñar un usuario"
+        ],
+        "summary": "Te enseña un jugador ya registrado",
+        "description": "Enseña el jugador con el alias escrito",
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "Alias del jugador",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "ver al jugador",
+            "schema": {
+              "$ref": "#/definitions/player"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Nombres muy chulos"
+        ],
+        "summary": "esto hace cosas chupi guays",
+        "description": "Añade un jugador nuevo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "Alias del jugador",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "player",
+            "description": "Si quieres introducir new player",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/player"
+            }
+          }
+        ],
+        "responses": {
+          "301": {
+            "description": "jugador creado",
+            "schema": {
+              "$ref": "#/definitions/player"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Actualiza un usuario"
+        ],
+        "summary": "Actualizar un jugador ya creado",
+        "description": "Actualizar un jugador que ya existe",
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "Alias del jugador",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "player",
+            "description": "actualizar jugador",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/player"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "ver los datos actualizados",
+            "schema": {
+              "$ref": "#/definitions/player"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "player": {
+      "type": "object",
+      "required": [
+        "name",
+        "score",
+        "surname"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jose"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Perez"
+        },
+        "score": {
+          "type": "integer",
+          "example": 69
+        }
+      }
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/player"
+      }
+    }
+  }
+}
